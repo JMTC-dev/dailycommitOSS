@@ -92,7 +92,7 @@ const postData = async () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          content: `@everyone \n${validStrings
+          content: `@everyone \n\n${validStrings
             .map((value) => `${value}\n\n`)
             .join("")}`,
         }),
