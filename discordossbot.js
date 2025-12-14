@@ -100,9 +100,9 @@ const postData = async () => {
         body: JSON.stringify({
           content: `@everyone \n\n${validStrings
             .map((value) => `${value}\n\n`)
-            .join("")} ${
+            .join("")}\n${
             !userWhoDidntPushDiscord
-              ? `\n${userWhoDidntPushDiscord} shame on you! That's $5`
+              ? `${userWhoDidntPushDiscord} shame on you! That's $5`
               : ""
           }`,
         }),
