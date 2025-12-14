@@ -30,7 +30,7 @@ jobs:
       - name: install octokit
         run: bun add octokit
       - name: Run the script
-        run: bun index.ts
+        run: bun discordossbot.js
         env:
           WEBHOOK_URL: ${{secrets.WEBHOOK_URL}} 
           USERS: ${{secrets.USERS}}
