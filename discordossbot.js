@@ -26,7 +26,7 @@ const postData = async () => {
           new Date(event["created_at"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
       )[0];
-      if (lastGitPush["created_at"] != undefined) {
+      if (lastGitPush.length >= 1) {
         let lastGitPushDate = new Date(lastGitPush["created_at"]);
         lastGitPushDate = lastGitPushDate.toLocaleString("en-au", {
           timeZone: "Australia/Brisbane",
