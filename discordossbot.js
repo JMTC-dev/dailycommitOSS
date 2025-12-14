@@ -83,7 +83,7 @@ const postData = async () => {
         const time = value.split("|")[1].split(",")[1].trim();
         const lastGitCommitMessage = value.split("|")[3].trim();
         validStrings.push(
-          `${discordUsername} has done a commit today! \n 🔗  https://github.com/${githubRepo} \n 💬  Last Commit: ${lastGitCommitMessage} \n 📅  on ${date} at ${time}`
+          `${discordUsername} has done a commit today! \n\n 🔗  https://github.com/${githubRepo} \n\n 💬  Last Commit: ${lastGitCommitMessage} \n\n 📅  on ${date} at ${time}`
         );
       });
       const response = await fetch(process.env.WEBHOOK_URL, {
