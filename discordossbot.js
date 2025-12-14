@@ -52,11 +52,10 @@ const postData = async () => {
             new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
         )[0];
-        const totalGitCommits = await response.filter(
+        const totalGitCommits = await lastGitMessageRequest.data.filter(
           (event) =>
-            event["type"] === "PushEvent" &&
-            new Date(event["created_at"]).setHours(0, 0, 0, 0) ===
-              new Date().setHours(0, 0, 0, 0)
+            new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
+            new Date().setHours(0, 0, 0, 0)
         ).length;
         const lastGitMessage = lastGitMessageResponse["commit"]["message"];
         usersWhoPushed = usersWhoPushed.set(
