@@ -44,10 +44,15 @@ const postData = async () => {
             new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
         )[0];
+        const totalGitCommits = lastGitMessageRequest.data.filter(
+          (event) =>
+            new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
+            new Date().setHours(0, 0, 0, 0)
+        ).length;
         const lastGitMessage = lastGitMessageResponse["commit"]["message"];
         usersWhoPushed = usersWhoPushed.set(
           `${lastGitPush["actor"].login}`,
-          `${lastGitPush["repo"].name} | ${lastGitPushDate} | ${discordUsernames[i]} | ${lastGitMessage}`
+          `${lastGitPush["repo"].name} | ${lastGitPushDate} | ${discordUsernames[i]} | ${lastGitMessage} | ${totalGitCommits}`
         );
       }
     }
@@ -82,8 +87,9 @@ const postData = async () => {
         const date = value.split("|")[1].split(",")[0].trim();
         const time = value.split("|")[1].split(",")[1].trim();
         const lastGitCommitMessage = value.split("|")[3].trim();
+        const totalGitCommits = value.split("|")[4].trim();
         validStrings.push(
-          `${discordUsername} has done a commit today! \n🔗  https://github.com/${githubRepo} \n💬  Last Commit: ${lastGitCommitMessage} \n📅  on ${date} at ${time}`
+          `${discordUsername} has done a commit today! \n🔗  https://github.com/${githubRepo} \n💬  Last Commit: ${lastGitCommitMessage} \n📅  on ${date} at ${time}\n📊  Total Commits Today: ${totalGitCommits}}`
         );
       });
       const userWhoDidntPushDiscord =
