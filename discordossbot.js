@@ -26,28 +26,30 @@ const postData = async () => {
           new Date(event["created_at"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
       )[0];
-      let lastGitPushDate = new Date(lastGitPush["created_at"]);
-      lastGitPushDate = lastGitPushDate.toLocaleString("en-au", {
-        timeZone: "Australia/Brisbane",
-      });
-      const repoName = lastGitPush["repo"].name.split("/")[1];
-      const lastGitMessageRequest = await octokit.request(
-        "GET /repos/{owner}/{repo}/commits",
-        {
-          owner: user,
-          repo: repoName,
-        }
-      );
-      const lastGitMessageResponse = lastGitMessageRequest.data.filter(
-        (event) =>
-          new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
-          new Date().setHours(0, 0, 0, 0)
-      )[0];
-      const lastGitMessage = lastGitMessageResponse["commit"]["message"];
-      usersWhoPushed = usersWhoPushed.set(
-        `${lastGitPush["actor"].login}`,
-        `${lastGitPush["repo"].name} | ${lastGitPushDate} | ${discordUsernames[i]} | ${lastGitMessage}`
-      );
+      if (lastGitPush["created_at"] != undefined) {
+        let lastGitPushDate = new Date(lastGitPush["created_at"]);
+        lastGitPushDate = lastGitPushDate.toLocaleString("en-au", {
+          timeZone: "Australia/Brisbane",
+        });
+        const repoName = lastGitPush["repo"].name.split("/")[1];
+        const lastGitMessageRequest = await octokit.request(
+          "GET /repos/{owner}/{repo}/commits",
+          {
+            owner: user,
+            repo: repoName,
+          }
+        );
+        const lastGitMessageResponse = lastGitMessageRequest.data.filter(
+          (event) =>
+            new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
+            new Date().setHours(0, 0, 0, 0)
+        )[0];
+        const lastGitMessage = lastGitMessageResponse["commit"]["message"];
+        usersWhoPushed = usersWhoPushed.set(
+          `${lastGitPush["actor"].login}`,
+          `${lastGitPush["repo"].name} | ${lastGitPushDate} | ${discordUsernames[i]} | ${lastGitMessage}`
+        );
+      }
     }
     console.log(usersWhoPushed);
   } catch (error) {
@@ -81,10 +83,10 @@ const postData = async () => {
         const time = date.split(",")[1].trim();
         const lastGitCommitMessage = value.split("|")[3].trim();
         validStrings.push(
-          ```${discordUsername} has done a commit today!
-              🔗 https://github.com/${githubRepo} 
+          `${discordUsername} has done a commit today!
+              🔗 https://github.com/${githubRepo}
               💬 Last Commit: ${lastGitCommitMessage}
-              📅 on ${date} at ${time}```
+              📅 on ${date} at ${time}`
         );
       });
       const response = await fetch(process.env.WEBHOOK_URL, {
