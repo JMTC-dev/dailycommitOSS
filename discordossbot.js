@@ -38,13 +38,10 @@ const postData = async () => {
           repo: repoName,
         }
       );
-      console.log(lastGitMessageRequest.data[0]["commit"]["author"]);
       const lastGitMessageResponse = lastGitMessageRequest.data.filter(
         (event) =>
-          new Date(
-            event["commit"]["author"]["date"].setHours(0, 0, 0, 0) ===
-              new Date().setHours(0, 0, 0, 0)
-          )
+          new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
+          new Date().setHours(0, 0, 0, 0)
       )[0];
       const lastGitMessage = lastGitMessageResponse["commit"]["message"];
       usersWhoPushed = usersWhoPushed.set(
