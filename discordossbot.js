@@ -79,7 +79,7 @@ const postData = async () => {
       usersWhoPushed.forEach((value, key) => {
         const discordUsername = value.split("|")[2].trim();
         const githubRepo = value.split("|")[0].trim();
-        const date = value.split("|")[1].trim();
+        const date = value.split("|")[1].split(",")[0].trim();
         const time = date.split(",")[1].trim();
         const lastGitCommitMessage = value.split("|")[3].trim();
         validStrings.push(
