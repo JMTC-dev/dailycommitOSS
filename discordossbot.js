@@ -37,7 +37,8 @@ const postData = async () => {
           owner: user,
           repo: repoName,
         }
-      )[0];
+      );
+      console.log(lastGitMessageRequest);
       const lastGitMessageResponse = lastGitMessageRequest.filter(
         (event) =>
           new Date(
