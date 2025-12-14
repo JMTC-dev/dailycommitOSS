@@ -39,12 +39,12 @@ const postData = async () => {
             repo: repoName,
           }
         );
-        const lastGitMessageResponse = lastGitMessageRequest.data.filter(
+        const lastGitMessageResponse = await lastGitMessageRequest.data.filter(
           (event) =>
             new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
         )[0];
-        const totalGitCommits = lastGitMessageRequest.data.filter(
+        const totalGitCommits = await lastGitMessageRequest.data.filter(
           (event) =>
             new Date(event["commit"]["author"]["date"]).setHours(0, 0, 0, 0) ===
             new Date().setHours(0, 0, 0, 0)
