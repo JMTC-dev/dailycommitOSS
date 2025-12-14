@@ -87,10 +87,11 @@ const postData = async () => {
         );
       });
       const userWhoDidntPushDiscord =
-        validStrings.includes(discordUsernames[0]) &&
-        !validStrings.includes(discordUsernames[1])
-          ? discordUsernames[0]
-          : discordUsernames[1];
+        usersWhoPushed.length > 1
+          ? false
+          : validStrings.includes(discordUsernames[0])
+          ? discordUsernames[1]
+          : discordUsernames[0];
       const response = await fetch(process.env.WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -99,7 +100,11 @@ const postData = async () => {
         body: JSON.stringify({
           content: `@everyone \n\n${validStrings
             .map((value) => `${value}\n\n`)
-            .join("")}\n\n ${userWhoDidntPushDiscord} shame on you! That's $5`,
+            .join("")} ${
+            !userWhoDidntPushDiscord
+              ? `\n${userWhoDidntPushDiscord} shame on you! That's $5`
+              : ""
+          }`,
         }),
       });
 
