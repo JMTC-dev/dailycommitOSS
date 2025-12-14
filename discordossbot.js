@@ -89,7 +89,7 @@ const postData = async () => {
         const lastGitCommitMessage = value.split("|")[3].trim();
         const totalGitCommits = value.split("|")[4].trim();
         validStrings.push(
-          `${discordUsername} has done a commit today! \n🔗  https://github.com/${githubRepo} \n💬  Last Commit: ${lastGitCommitMessage} \n📅  on ${date} at ${time}\n📊  Total Commits Today: ${totalGitCommits}}`
+          `${discordUsername} has done a commit today! \n🔗  https://github.com/${githubRepo} \n💬  Last Commit: ${lastGitCommitMessage} \n📅  on ${date} at ${time}\n📊  Total Commits Today: ${totalGitCommits}`
         );
       });
       const userWhoDidntPushDiscord =
