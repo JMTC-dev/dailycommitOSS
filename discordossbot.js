@@ -86,16 +86,11 @@ const postData = async () => {
           `${discordUsername} has done a commit today! \n🔗  https://github.com/${githubRepo} \n💬  Last Commit: ${lastGitCommitMessage} \n📅  on ${date} at ${time}`
         );
       });
-      const userWhoDidntPushDiscord = validStrings.includes(
-        discordUsernames[0] && !validStrings.includes(discordUsernames[1])
-      )
-        ? discordUsernames[0]
-        : discordUsernames[1];
-      const userWhoDidntPushGithub = usersWhoPushed.has(
-        listOfUsers.toString().trim().split(",")[0]
-      )
-        ? listOfUsers.toString().trim().split(",")[0]
-        : listOfUsers.toString().trim().split(",")[1];
+      const userWhoDidntPushDiscord =
+        validStrings.includes(discordUsernames[0]) &&
+        !validStrings.includes(discordUsernames[1])
+          ? discordUsernames[0]
+          : discordUsernames[1];
       const response = await fetch(process.env.WEBHOOK_URL, {
         method: "POST",
         headers: {
