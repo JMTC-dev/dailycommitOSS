@@ -18,6 +18,10 @@ const postData = async () => {
       let user = users[i];
       const result = await octokit.request("GET /users/{owner}/events/public", {
         owner: user,
+        per_page: 100,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
       });
       let response = result.data;
       let lastGitPush = await response.filter(
@@ -37,6 +41,10 @@ const postData = async () => {
           {
             owner: user,
             repo: repoName,
+            per_page: 100,
+            headers: {
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
           }
         );
         const lastGitMessageResponse = await lastGitMessageRequest.data.filter(
