@@ -12,6 +12,8 @@ const postData = async () => {
     .split(",");
 
   try {
+    let createdAtDate;
+    let newDate;
     const response = listOfUsers;
     let users = response.toString().trim().split(",");
     for (let i = 0; i < users.length; i++) {
@@ -24,12 +26,17 @@ const postData = async () => {
         },
       });
       let response = result.data;
-      let lastGitPush = await response.filter(
-        (event) =>
-          event["type"] === "PushEvent" &&
-          new Date(event["created_at"]).setHours(0, 0, 0, 0) ===
-            new Date().setHours(0, 0, 0, 0)
-      )[0];
+      let lastGitPush = await response.filter((event) => {
+        createdAtDate = new Date(event["created_at"]).toLocaleDateString(
+          "en-AU",
+          { timeZone: "Australia/Brisbane" }
+        );
+        newDate = new Date().toLocaleDateString("en-AU", {
+          timeZone: "Australia/Brisbane",
+        });
+
+        event["type"] === "PushEvent" && createdAtDate === newDate;
+      })[0];
       if (lastGitPush != undefined) {
         let lastGitPushDate = new Date(lastGitPush["created_at"]);
         lastGitPushDate = lastGitPushDate.toLocaleString("en-au", {
@@ -65,6 +72,7 @@ const postData = async () => {
       }
     }
     console.log(usersWhoPushed);
+    console.log("Dates: ", createdAtDate, newDate);
   } catch (error) {
     console.error("Error:", error);
   }
